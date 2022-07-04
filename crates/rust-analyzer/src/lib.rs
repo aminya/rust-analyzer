@@ -23,7 +23,7 @@ mod line_index;
 mod main_loop;
 mod mem_docs;
 mod op_queue;
-mod reload;
+pub mod reload;
 mod target_spec;
 mod task_pool;
 mod test_runner;

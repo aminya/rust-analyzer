@@ -394,7 +394,7 @@ pub fn load_proc_macro(
     }
 }
 
-fn load_crate_graph(
+pub fn load_crate_graph(
     ws: &ProjectWorkspace,
     crate_graph: CrateGraph,
     proc_macros: ProcMacros,
