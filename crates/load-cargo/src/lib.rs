@@ -299,7 +299,7 @@ pub fn load_proc_macro(
     }
 }
 
-fn load_crate_graph(
+pub fn load_crate_graph(
     crate_graph: CrateGraph,
     proc_macros: ProcMacros,
     source_root_config: SourceRootConfig,
