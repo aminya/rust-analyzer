@@ -31,7 +31,7 @@ mod main_loop;
 mod markdown;
 mod mem_docs;
 mod op_queue;
-mod reload;
+pub mod reload;
 mod semantic_tokens;
 mod task_pool;
 mod to_proto;
