@@ -550,7 +550,7 @@ pub struct Import {
 #[derive(Debug, Clone, Eq, PartialEq)]
 pub struct UseTree {
     pub index: Idx<ast::UseTree>,
-    kind: UseTreeKind,
+    pub kind: UseTreeKind,
 }
 
 #[derive(Debug, Clone, Eq, PartialEq)]
