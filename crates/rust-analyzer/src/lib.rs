@@ -36,6 +36,7 @@ mod semantic_tokens;
 mod task_pool;
 mod to_proto;
 mod version;
+pub mod bin;
 
 mod handlers {
     pub(crate) mod notification;

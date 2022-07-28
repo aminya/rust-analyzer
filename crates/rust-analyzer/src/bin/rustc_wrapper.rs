@@ -11,9 +11,9 @@ use std::{
 };
 
 /// ExitCode/ExitStatus are impossible to create :(.
-pub(crate) struct ExitCode(pub(crate) Option<i32>);
+pub struct ExitCode(pub Option<i32>);
 
-pub(crate) fn run_rustc_skipping_cargo_checking(
+pub fn run_rustc_skipping_cargo_checking(
     rustc_executable: OsString,
     args: Vec<OsString>,
 ) -> io::Result<ExitCode> {
