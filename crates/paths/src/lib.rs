@@ -114,7 +114,7 @@ impl AbsPathBuf {
 
     /// Wrap the given absolute path in `AbsPathBuf`
     ///
-    pub fn unchecked(path: PathBuf) -> AbsPathBuf {
+    pub fn new_unchecked(path: Utf8PathBuf) -> AbsPathBuf {
         AbsPathBuf(path)
     }
 
@@ -122,7 +122,7 @@ impl AbsPathBuf {
     ///
     /// Equivalent of [`Utf8PathBuf::as_path`] for `AbsPathBuf`.
     pub fn as_path(&self) -> &AbsPath {
-        AbsPath::assert(self.0.as_path())
+        AbsPath::new_unchecked(self.0.as_path())
     }
 
     /// Equivalent of [`Utf8PathBuf::pop`] for `AbsPathBuf`.
@@ -218,13 +218,13 @@ impl AbsPath {
     /// Panics if `path` is not absolute.
     pub fn assert(path: &Utf8Path) -> &AbsPath {
         assert!(path.is_absolute(), "{path} is not absolute");
-        Self::unchecked(path)
+        Self::new_unchecked(path)
     }
 
     /// Wrap the given absolute path in `AbsPath`
     ///
-    pub fn unchecked(path: &Path) -> &AbsPath {
-        unsafe { &*(path as *const Path as *const AbsPath) }
+    pub fn new_unchecked(path: &Utf8Path) -> &AbsPath {
+        unsafe { &*(path as *const Utf8Path as *const AbsPath) }
     }
 
     /// Equivalent of [`Utf8Path::parent`] for `AbsPath`.
@@ -255,12 +255,12 @@ impl AbsPath {
     /// assert_eq!(normalized, AbsPathBuf::assert("/b/c".into()));
     /// ```
     pub fn normalize(&self) -> AbsPathBuf {
-        AbsPathBuf(normalize_path(&self.0))
+        AbsPathBuf::new_unchecked(normalize_path(&self.0))
     }
 
     /// Equivalent of [`Utf8Path::to_path_buf`] for `AbsPath`.
     pub fn to_path_buf(&self) -> AbsPathBuf {
-        AbsPathBuf::try_from(self.0.to_path_buf()).unwrap()
+        AbsPathBuf::new_unchecked(self.0.to_path_buf())
     }
 
     pub fn canonicalize(&self) -> ! {
@@ -384,6 +384,12 @@ impl RelPathBuf {
     pub fn as_path(&self) -> &RelPath {
         RelPath::new_unchecked(self.0.as_path())
     }
+
+    /// Wrap the given relative path in `RelPathBuf` without checking if it is relative.
+    ///
+    pub fn new_unchecked(path: Utf8PathBuf) -> RelPathBuf {
+        RelPathBuf(path)
+    }
 }
 
 /// Wrapper around a relative [`Utf8Path`].
@@ -421,6 +427,13 @@ impl RelPath {
 
     pub fn as_str(&self) -> &str {
         self.0.as_str()
+    }
+
+    pub fn from_path(path: &Utf8Path) -> Result<&RelPath, String> {
+        if !path.is_relative() {
+            return Err(format!("{:?} is not a relative path", path.as_os_str()));
+        }
+        Ok(RelPath::new_unchecked(path))
     }
 }
 
