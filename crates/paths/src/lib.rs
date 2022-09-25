@@ -80,6 +80,12 @@ impl AbsPathBuf {
             .unwrap_or_else(|path| panic!("expected absolute path, got {}", path.display()))
     }
 
+    /// Wrap the given absolute path in `AbsPathBuf`
+    ///
+    pub fn unchecked(path: PathBuf) -> AbsPathBuf {
+        AbsPathBuf(path)
+    }
+
     /// Coerces to an `AbsPath` slice.
     ///
     /// Equivalent of [`PathBuf::as_path`] for `AbsPathBuf`.
@@ -139,6 +145,12 @@ impl AbsPath {
     /// Panics if `path` is not absolute.
     pub fn assert(path: &Path) -> &AbsPath {
         assert!(path.is_absolute());
+        unsafe { &*(path as *const Path as *const AbsPath) }
+    }
+
+    /// Wrap the given absolute path in `AbsPath`
+    ///
+    pub fn unchecked(path: &Path) -> &AbsPath {
         unsafe { &*(path as *const Path as *const AbsPath) }
     }
 
