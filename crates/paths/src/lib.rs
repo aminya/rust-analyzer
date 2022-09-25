@@ -3,6 +3,7 @@
 
 #![warn(rust_2018_idioms, unused_lifetimes, semicolon_in_expressions_from_macros)]
 
+use serde::{Deserialize, Serialize};
 use std::{
     borrow::Borrow,
     ffi::OsStr,
@@ -11,7 +12,7 @@ use std::{
 };
 
 /// Wrapper around an absolute [`PathBuf`].
-#[derive(Debug, Clone, Ord, PartialOrd, Eq, PartialEq, Hash)]
+#[derive(Serialize, Deserialize, Debug, Clone, Ord, PartialOrd, Eq, PartialEq, Hash)]
 pub struct AbsPathBuf(PathBuf);
 
 impl From<AbsPathBuf> for PathBuf {
@@ -102,7 +103,7 @@ impl fmt::Display for AbsPathBuf {
 }
 
 /// Wrapper around an absolute [`Path`].
-#[derive(Debug, Ord, PartialOrd, Eq, PartialEq, Hash)]
+#[derive(Serialize, Debug, Ord, PartialOrd, Eq, PartialEq, Hash)]
 #[repr(transparent)]
 pub struct AbsPath(Path);
 
@@ -241,7 +242,7 @@ impl fmt::Display for AbsPath {
 }
 
 /// Wrapper around a relative [`PathBuf`].
-#[derive(Debug, Clone, Ord, PartialOrd, Eq, PartialEq, Hash)]
+#[derive(Serialize, Deserialize, Debug, Clone, Ord, PartialOrd, Eq, PartialEq, Hash)]
 pub struct RelPathBuf(PathBuf);
 
 impl From<RelPathBuf> for PathBuf {
@@ -290,7 +291,7 @@ impl RelPathBuf {
 }
 
 /// Wrapper around a relative [`Path`].
-#[derive(Debug, Ord, PartialOrd, Eq, PartialEq, Hash)]
+#[derive(Serialize, Debug, Ord, PartialOrd, Eq, PartialEq, Hash)]
 #[repr(transparent)]
 pub struct RelPath(Path);
 
