@@ -7,11 +7,14 @@ use std::{
     fmt, ops,
     path::{Path, PathBuf},
 };
+#[cfg(feature = "serde1")]
+use serde::{Deserialize, Serialize};
 
 pub use camino::{Utf8Component, Utf8Components, Utf8Path, Utf8PathBuf, Utf8Prefix};
 
 /// A [`Utf8PathBuf`] that is guaranteed to be absolute.
 #[derive(Debug, Clone, Ord, PartialOrd, Eq, Hash)]
+#[cfg_attr(feature = "serde1", derive(Serialize, Deserialize))]
 pub struct AbsPathBuf(Utf8PathBuf);
 
 impl From<AbsPathBuf> for Utf8PathBuf {
@@ -155,6 +158,7 @@ impl fmt::Display for AbsPathBuf {
 
 /// Wrapper around an absolute [`Utf8Path`].
 #[derive(Debug, Ord, PartialOrd, Eq, Hash)]
+#[cfg_attr(feature = "serde1", derive(Serialize))]
 #[repr(transparent)]
 pub struct AbsPath(Utf8Path);
 
@@ -316,6 +320,7 @@ impl fmt::Display for AbsPath {
 
 /// Wrapper around a relative [`Utf8PathBuf`].
 #[derive(Debug, Clone, Ord, PartialOrd, Eq, PartialEq, Hash)]
+#[cfg_attr(feature = "serde1", derive(Serialize, Deserialize))]
 pub struct RelPathBuf(Utf8PathBuf);
 
 impl From<RelPathBuf> for Utf8PathBuf {
@@ -371,6 +376,7 @@ impl RelPathBuf {
 
 /// Wrapper around a relative [`Utf8Path`].
 #[derive(Debug, Ord, PartialOrd, Eq, PartialEq, Hash)]
+#[cfg_attr(feature = "serde1", derive(Serialize))]
 #[repr(transparent)]
 pub struct RelPath(Utf8Path);
 
