@@ -82,7 +82,7 @@ impl AbsPathBuf {
 
     /// Wrap the given absolute path in `AbsPathBuf`
     ///
-    pub fn unchecked(path: PathBuf) -> AbsPathBuf {
+    pub fn new_unchecked(path: PathBuf) -> AbsPathBuf {
         AbsPathBuf(path)
     }
 
@@ -90,7 +90,7 @@ impl AbsPathBuf {
     ///
     /// Equivalent of [`PathBuf::as_path`] for `AbsPathBuf`.
     pub fn as_path(&self) -> &AbsPath {
-        AbsPath::assert(self.0.as_path())
+        AbsPath::new_unchecked(self.0.as_path())
     }
 
     /// Equivalent of [`PathBuf::pop`] for `AbsPathBuf`.
@@ -145,12 +145,12 @@ impl AbsPath {
     /// Panics if `path` is not absolute.
     pub fn assert(path: &Path) -> &AbsPath {
         assert!(path.is_absolute());
-        unsafe { &*(path as *const Path as *const AbsPath) }
+        Self::new_unchecked(path)
     }
 
     /// Wrap the given absolute path in `AbsPath`
     ///
-    pub fn unchecked(path: &Path) -> &AbsPath {
+    pub fn new_unchecked(path: &Path) -> &AbsPath {
         unsafe { &*(path as *const Path as *const AbsPath) }
     }
 
@@ -182,12 +182,12 @@ impl AbsPath {
     /// assert_eq!(normalized, AbsPathBuf::assert("/b/c".into()));
     /// ```
     pub fn normalize(&self) -> AbsPathBuf {
-        AbsPathBuf(normalize_path(&self.0))
+        AbsPathBuf::new_unchecked(normalize_path(&self.0))
     }
 
     /// Equivalent of [`Path::to_path_buf`] for `AbsPath`.
     pub fn to_path_buf(&self) -> AbsPathBuf {
-        AbsPathBuf::try_from(self.0.to_path_buf()).unwrap()
+        AbsPathBuf::new_unchecked(self.0.to_path_buf())
     }
 
     pub fn canonicalize(&self) -> ! {
