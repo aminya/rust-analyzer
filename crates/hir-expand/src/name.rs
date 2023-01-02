@@ -50,7 +50,7 @@ impl Name {
     /// Note: this is private to make creating name from random string hard.
     /// Hopefully, this should allow us to integrate hygiene cleaner in the
     /// future, and to switch to interned representation of names.
-    const fn new_text(text: SmolStr) -> Name {
+    pub const fn new_text(text: SmolStr) -> Name {
         Name(Repr::Text(text))
     }
 
