@@ -73,7 +73,7 @@ impl Name {
     /// Note: this is private to make creating name from random string hard.
     /// Hopefully, this should allow us to integrate hygiene cleaner in the
     /// future, and to switch to interned representation of names.
-    fn new_text(text: &str) -> Name {
+    pub fn new_text(text: &str) -> Name {
         Name { symbol: Symbol::intern(text), ctx: () }
     }
 

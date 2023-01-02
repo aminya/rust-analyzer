@@ -736,7 +736,7 @@ pub struct Function {
     pub params: Box<[Param]>,
     pub ret_type: Interned<TypeRef>,
     pub ast_id: FileAstId<ast::Fn>,
-    pub(crate) flags: FnFlags,
+    pub flags: FnFlags,
 }
 
 #[derive(Debug, Clone, PartialEq, Eq)]
@@ -746,7 +746,7 @@ pub struct Param {
 
 bitflags::bitflags! {
     #[derive(Debug, Clone, Copy, Eq, PartialEq, Default)]
-    pub(crate) struct FnFlags: u8 {
+    pub struct FnFlags: u8 {
         const HAS_SELF_PARAM = 1 << 0;
         const HAS_BODY = 1 << 1;
         const HAS_DEFAULT_KW = 1 << 2;
