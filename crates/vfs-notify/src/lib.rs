@@ -45,15 +45,15 @@ impl loader::Handle for NotifyHandle {
         NotifyHandle { sender, _thread: thread }
     }
 
-    fn set_config(&mut self, config: loader::Config) {
+    fn set_config(&self, config: loader::Config) {
         self.sender.send(Message::Config(config)).unwrap();
     }
 
-    fn invalidate(&mut self, path: AbsPathBuf) {
+    fn invalidate(&self, path: AbsPathBuf) {
         self.sender.send(Message::Invalidate(path)).unwrap();
     }
 
-    fn load_sync(&mut self, path: &AbsPath) -> Option<Vec<u8>> {
+    fn load_sync(&self, path: &AbsPath) -> Option<Vec<u8>> {
         read(path)
     }
 }
