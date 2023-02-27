@@ -84,7 +84,7 @@ impl SourceRoot {
 /// <https://github.com/rust-lang/rust-analyzer/blob/master/docs/dev/architecture.md#serialization>
 #[derive(Clone, Default)]
 pub struct CrateGraph {
-    arena: Arena<CrateData>,
+    pub arena: Arena<CrateData>,
 }
 
 impl fmt::Debug for CrateGraph {
@@ -657,7 +657,7 @@ impl ops::Index<CrateId> for CrateGraph {
 impl CrateData {
     /// Add a dependency to `self` without checking if the dependency
     // is existent among `self.dependencies`.
-    fn add_dep(&mut self, dep: Dependency) {
+    pub fn add_dep(&mut self, dep: Dependency) {
         self.dependencies.push(dep)
     }
 
