@@ -10,6 +10,7 @@
 //! a debugging aid.
 
 #![warn(rust_2018_idioms, unused_lifetimes, semicolon_in_expressions_from_macros)]
+#![feature(is_some_and)]
 
 pub mod cli;
 

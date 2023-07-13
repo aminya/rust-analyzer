@@ -1,6 +1,7 @@
 //! `completions` crate provides utilities for generating completions of user input.
 
 #![warn(rust_2018_idioms, unused_lifetimes, semicolon_in_expressions_from_macros)]
+#![feature(is_some_and)]
 
 mod completions;
 mod config;

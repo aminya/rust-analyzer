@@ -2,6 +2,8 @@
 //!
 //! Eventually this should probably be replaced with salsa-based interning.
 
+#![feature(once_cell)]
+
 use std::{
     fmt::{self, Debug, Display},
     hash::{BuildHasherDefault, Hash, Hasher},

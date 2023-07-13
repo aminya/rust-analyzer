@@ -9,6 +9,8 @@
 
 #![warn(rust_2018_idioms, unused_lifetimes, semicolon_in_expressions_from_macros)]
 #![cfg_attr(feature = "in-rust-tree", feature(rustc_private))]
+#![feature(is_some_and)]
+#![feature(once_cell)]
 
 #[allow(unused)]
 macro_rules! eprintln {
