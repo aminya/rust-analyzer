@@ -63,7 +63,7 @@ pub fn load_workspace(
 ) -> anyhow::Result<(RootDatabase, vfs::Vfs, Option<ProcMacroServer>)> {
     let (sender, receiver) = unbounded();
     let mut vfs = vfs::Vfs::default();
-    let mut loader = {
+    let loader = {
         let loader =
             vfs_notify::NotifyHandle::spawn(Box::new(move |msg| sender.send(msg).unwrap()));
         Box::new(loader)
