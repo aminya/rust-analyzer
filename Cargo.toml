@@ -117,8 +117,5 @@ rayon = "1.8.0"
 serde = { version = "1.0.192", features = ["derive"] }
 serde_json = "1.0.108"
 triomphe = { version = "0.1.8", default-features = false, features = ["std"] }
-# can't upgrade due to dashmap depending on 0.12.3 currently
-hashbrown = { version = "0.12.3", features = [
-  "inline-more",
-], default-features = false }
+hashbrown = { version = "0.14.2", features = ["inline-more"], default-features = false }
 xshell = "0.2.5"
