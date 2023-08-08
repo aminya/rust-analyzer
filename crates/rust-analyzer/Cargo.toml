@@ -63,6 +63,7 @@ load-cargo.workspace = true
 proc-macro-api.workspace = true
 profile.workspace = true
 project-model.workspace = true
+rustc-wrapper.workspace = true
 stdx.workspace = true
 syntax.workspace = true
 parser.workspace = true

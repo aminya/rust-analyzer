@@ -1664,6 +1664,7 @@ dependencies = [
  "project-model",
  "rayon",
  "rustc-hash",
+ "rustc-wrapper",
  "scip",
  "semver",
  "serde",
@@ -1699,6 +1700,10 @@ name = "rustc-hash"
 version = "1.1.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "08d43f7aa6b08d49f382cde6a7982047c3426db949b1424bc4b7ec9ae12c6ce2"
+
+[[package]]
+name = "rustc-wrapper"
+version = "0.0.0"
 
 [[package]]
 name = "rustc_apfloat"
@@ -2322,6 +2327,7 @@ dependencies = [
  "nohash-hasher",
  "paths",
  "rustc-hash",
+ "serde",
  "stdx",
  "tracing",
 ]

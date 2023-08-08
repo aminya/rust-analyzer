@@ -8,8 +8,6 @@
 #[cfg(feature = "in-rust-tree")]
 extern crate rustc_driver as _;
 
-mod rustc_wrapper;
-
 use std::{env, fs, path::PathBuf, process::ExitCode, sync::Arc};
 
 use anyhow::Context;
