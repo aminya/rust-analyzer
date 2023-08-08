@@ -9,13 +9,13 @@
 extern crate rustc_driver;
 
 mod logger;
-mod rustc_wrapper;
 
 use std::{env, fs, path::PathBuf, process};
 
 use anyhow::Context;
 use lsp_server::Connection;
 use rust_analyzer::{cli::flags, config::Config, from_json};
+use rustc_wrapper::rustc_wrapper_main;
 use vfs::AbsPathBuf;
 
 #[cfg(all(feature = "mimalloc"))]
@@ -27,18 +27,8 @@ static ALLOC: mimalloc::MiMalloc = mimalloc::MiMalloc;
 static ALLOC: jemallocator::Jemalloc = jemallocator::Jemalloc;
 
 fn main() -> anyhow::Result<()> {
-    if std::env::var("RA_RUSTC_WRAPPER").is_ok() {
-        let mut args = std::env::args_os();
-        let _me = args.next().unwrap();
-        let rustc = args.next().unwrap();
-        let code = match rustc_wrapper::run_rustc_skipping_cargo_checking(rustc, args.collect()) {
-            Ok(rustc_wrapper::ExitCode(code)) => code.unwrap_or(102),
-            Err(err) => {
-                eprintln!("{err}");
-                101
-            }
-        };
-        process::exit(code);
+    if let Some(rustc_exit_code) = rustc_wrapper_main() {
+        process::exit(rustc_exit_code); // exit the rustc executable
     }
 
     let flags = flags::RustAnalyzer::from_env_or_exit();
