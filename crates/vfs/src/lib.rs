@@ -55,11 +55,12 @@ pub use crate::{
     vfs_path::VfsPath,
 };
 pub use paths::{AbsPath, AbsPathBuf};
+use serde::{Serialize, Deserialize};
 
 /// Handle to a file in [`Vfs`]
 ///
 /// Most functions in rust-analyzer use this when they need to refer to a file.
-#[derive(Copy, Clone, Debug, Ord, PartialOrd, Eq, PartialEq, Hash)]
+#[derive(Copy, Clone, Debug, Ord, PartialOrd, Eq, PartialEq, Hash, Serialize, Deserialize)]
 pub struct FileId(pub u32);
 
 /// safe because `FileId` is a newtype of `u32`
