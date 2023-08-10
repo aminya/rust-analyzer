@@ -54,6 +54,7 @@ pub use crate::{
 };
 use indexmap::{map::Entry, IndexMap};
 pub use paths::{AbsPath, AbsPathBuf};
+use serde::{Serialize, Deserialize};
 
 use rustc_hash::FxHasher;
 use stdx::hash_once;
@@ -62,7 +63,7 @@ use tracing::{span, Level};
 /// Handle to a file in [`Vfs`]
 ///
 /// Most functions in rust-analyzer use this when they need to refer to a file.
-#[derive(Copy, Clone, Debug, Ord, PartialOrd, Eq, PartialEq, Hash)]
+#[derive(Copy, Clone, Debug, Ord, PartialOrd, Eq, PartialEq, Hash, Serialize, Deserialize)]
 pub struct FileId(u32);
 // pub struct FileId(NonMaxU32);
 

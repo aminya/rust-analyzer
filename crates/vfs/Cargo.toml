@@ -17,6 +17,7 @@ rustc-hash.workspace = true
 tracing.workspace = true
 fst = "0.4.7"
 indexmap.workspace = true
+serde = { version = "1.0.156", features = ["derive"] }
 nohash-hasher.workspace = true
 
 paths.workspace = true
