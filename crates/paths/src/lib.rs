@@ -276,6 +276,18 @@ impl AsRef<Path> for RelPathBuf {
     }
 }
 
+impl AsRef<RelPath> for RelPathBuf {
+    fn as_ref(&self) -> &RelPath {
+        self
+    }
+}
+
+impl Borrow<RelPath> for RelPathBuf {
+    fn borrow(&self) -> &RelPath {
+        self.as_path()
+    }
+}
+
 impl TryFrom<PathBuf> for RelPathBuf {
     type Error = PathBuf;
     fn try_from(path_buf: PathBuf) -> Result<RelPathBuf, PathBuf> {
@@ -300,6 +312,12 @@ impl RelPathBuf {
     pub fn as_path(&self) -> &RelPath {
         RelPath::new_unchecked(self.0.as_path())
     }
+
+    /// Wrap the given relative path in `RelPathBuf` without checking if it is relative.
+    ///
+    pub fn new_unchecked(path: PathBuf) -> RelPathBuf {
+        RelPathBuf(path)
+    }
 }
 
 /// Wrapper around a relative [`Path`].
@@ -307,8 +325,21 @@ impl RelPathBuf {
 #[repr(transparent)]
 pub struct RelPath(Path);
 
+impl ToOwned for RelPath {
+    type Owned = RelPathBuf;
+    fn to_owned(&self) -> RelPathBuf {
+        RelPathBuf(self.0.to_owned())
+    }
+}
+
 impl AsRef<Path> for RelPath {
     fn as_ref(&self) -> &Path {
+        &self.0
+    }
+}
+
+impl Borrow<Path> for RelPath {
+    fn borrow(&self) -> &Path {
         &self.0
     }
 }
@@ -317,6 +348,27 @@ impl RelPath {
     /// Creates a new `RelPath` from `path`, without checking if it is relative.
     pub fn new_unchecked(path: &Path) -> &RelPath {
         unsafe { &*(path as *const Path as *const RelPath) }
+    }
+
+    pub fn from_path(path: &Path) -> Result<&RelPath, String> {
+        if !path.is_relative() {
+            return Err(format!("{:?} is not a relative path", path.as_os_str()));
+        }
+        Ok(RelPath::new_unchecked(path))
+    }
+}
+
+impl<'p> TryFrom<&'p Path> for &'p RelPath {
+    type Error = String;
+    fn try_from(path: &Path) -> Result<&RelPath, String> {
+        RelPath::from_path(path)
+    }
+}
+
+impl<'p> TryFrom<&'p str> for &'p RelPath {
+    type Error = String;
+    fn try_from(path: &str) -> Result<&RelPath, String> {
+        RelPath::from_path(Path::new(path))
     }
 }
 
