@@ -435,11 +435,11 @@ impl DefMap {
         self.block.map(|block| block.block)
     }
 
-    pub(crate) fn prelude(&self) -> Option<(ModuleId, Option<UseId>)> {
+    pub fn prelude(&self) -> Option<(ModuleId, Option<UseId>)> {
         self.prelude
     }
 
-    pub(crate) fn extern_prelude(
+    pub fn extern_prelude(
         &self,
     ) -> impl Iterator<Item = (&Name, (CrateRootModuleId, Option<ExternCrateId>))> + '_ {
         self.data.extern_prelude.iter().map(|(name, &def)| (name, def))
