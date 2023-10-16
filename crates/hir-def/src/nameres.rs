@@ -460,7 +460,7 @@ impl DefMap {
         CrateRootModuleId { krate: self.krate }
     }
 
-    pub(crate) fn resolve_path(
+    pub fn resolve_path(
         &self,
         db: &dyn DefDatabase,
         original_module: LocalModuleId,
