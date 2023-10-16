@@ -138,7 +138,7 @@ pub(crate) static BUILTIN_SCOPE: Lazy<FxIndexMap<Name, PerNs>> = Lazy::new(|| {
 
 /// Shadow mode for builtin type which can be shadowed by module.
 #[derive(Debug, Copy, Clone, PartialEq, Eq)]
-pub(crate) enum BuiltinShadowMode {
+pub enum BuiltinShadowMode {
     /// Prefer user-defined modules (or other types) over builtins.
     Module,
     /// Prefer builtins over user-defined modules (but not other types).
