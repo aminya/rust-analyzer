@@ -62,7 +62,7 @@ impl ProcMacrosBuilder {
 }
 
 #[derive(Default, Debug)]
-pub struct ProcMacros(FxHashMap<CrateId, StoredProcMacroLoadResult>);
+pub struct ProcMacros(pub FxHashMap<CrateId, StoredProcMacroLoadResult>);
 
 impl FromIterator<(CrateId, ProcMacroLoadResult)> for ProcMacros {
     fn from_iter<T: IntoIterator<Item = (CrateId, ProcMacroLoadResult)>>(iter: T) -> Self {
