@@ -511,7 +511,7 @@ pub fn load_proc_macro(
     }
 }
 
-fn load_crate_graph_into_db(
+pub fn load_crate_graph_into_db(
     crate_graph: CrateGraphBuilder,
     proc_macros: ProcMacrosBuilder,
     source_root_config: SourceRootConfig,

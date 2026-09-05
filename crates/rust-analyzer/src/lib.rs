@@ -39,7 +39,7 @@ mod main_loop;
 mod mem_docs;
 mod op_queue;
 mod priming_scope;
-mod reload;
+pub mod reload;
 mod target_spec;
 mod task_pool;
 mod test_runner;
