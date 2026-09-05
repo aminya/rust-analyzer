@@ -112,6 +112,12 @@ impl AbsPathBuf {
         )
     }
 
+    /// Wrap the given absolute path in `AbsPathBuf`
+    ///
+    pub fn unchecked(path: PathBuf) -> AbsPathBuf {
+        AbsPathBuf(path)
+    }
+
     /// Coerces to an `AbsPath` slice.
     ///
     /// Equivalent of [`Utf8PathBuf::as_path`] for `AbsPathBuf`.
@@ -212,7 +218,13 @@ impl AbsPath {
     /// Panics if `path` is not absolute.
     pub fn assert(path: &Utf8Path) -> &AbsPath {
         assert!(path.is_absolute(), "{path} is not absolute");
-        unsafe { &*(path as *const Utf8Path as *const AbsPath) }
+        Self::unchecked(path)
+    }
+
+    /// Wrap the given absolute path in `AbsPath`
+    ///
+    pub fn unchecked(path: &Path) -> &AbsPath {
+        unsafe { &*(path as *const Path as *const AbsPath) }
     }
 
     /// Equivalent of [`Utf8Path::parent`] for `AbsPath`.
