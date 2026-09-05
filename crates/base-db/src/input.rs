@@ -126,7 +126,7 @@ impl SourceRoot {
 
 #[derive(Default, Clone)]
 pub struct CrateGraphBuilder {
-    arena: Arena<CrateBuilder>,
+    pub arena: Arena<CrateBuilder>,
 }
 
 pub type CrateBuilderId = Idx<CrateBuilder>;
