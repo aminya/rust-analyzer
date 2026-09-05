@@ -10,7 +10,7 @@ use std::{
     process::{Command, ExitCode, Stdio},
 };
 
-pub(crate) fn main() -> io::Result<ExitCode> {
+pub fn main() -> io::Result<ExitCode> {
     let mut args = std::env::args_os();
     let _me = args.next().unwrap();
     let rustc = args.next().unwrap();

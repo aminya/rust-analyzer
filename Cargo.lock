@@ -2345,6 +2345,7 @@ dependencies = [
  "ra-ap-rustc_type_ir",
  "rayon",
  "rustc-hash 2.1.2",
+ "rustc-wrapper",
  "scip",
  "semver",
  "serde",
@@ -2389,6 +2390,10 @@ name = "rustc-hash"
 version = "2.1.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "94300abf3f1ae2e2b8ffb7b58043de3d399c73fa6f4b73826402a5c457614dbe"
+
+[[package]]
+name = "rustc-wrapper"
+version = "0.0.0"
 
 [[package]]
 name = "rustc-literal-escaper"
@@ -3191,6 +3196,7 @@ dependencies = [
  "nohash-hasher",
  "paths",
  "rustc-hash 2.1.2",
+ "serde",
  "stdx",
  "tracing",
 ]
