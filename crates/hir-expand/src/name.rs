@@ -78,7 +78,7 @@ impl PartialEq<Name> for &Symbol {
 
 impl Name {
     #[inline]
-    fn new_text(text: &str) -> Name {
+    pub fn new_text(text: &str) -> Name {
         Name { symbol: Symbol::intern(text), ctx: () }
     }
 
