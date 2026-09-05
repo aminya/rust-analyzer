@@ -680,7 +680,7 @@ impl DefMap {
         &self.macro_use_prelude
     }
 
-    pub(crate) fn resolve_path(
+    pub fn resolve_path(
         &self,
         local_def_map: &LocalDefMap,
         db: &dyn SourceDatabase,
