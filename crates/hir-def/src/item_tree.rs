@@ -498,7 +498,8 @@ pub struct Use {
 
 #[derive(Debug, Clone, Eq, PartialEq)]
 pub struct UseTree {
-    kind: UseTreeKind,
+    pub index: Idx<ast::UseTree>,
+    pub kind: UseTreeKind,
 }
 
 // FIXME: Would be nice to encode `None` into this
