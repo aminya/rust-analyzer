@@ -25,7 +25,7 @@ use tt::token_to_literal;
 
 use crate::item_tree::lower::Ctx;
 
-#[derive(Debug, PartialEq, Eq)]
+#[derive(Clone, Debug, PartialEq, Eq)]
 pub(crate) enum AttrsOrCfg {
     Enabled {
         attrs: AttrsOwned,
@@ -154,7 +154,7 @@ impl AttrsOrCfg {
     }
 }
 
-#[derive(Debug, PartialEq, Eq)]
+#[derive(Clone, Debug, PartialEq, Eq)]
 pub(crate) struct AttrsOwned(Box<[Attr]>);
 
 #[derive(Debug, Clone, Copy)]

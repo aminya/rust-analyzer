@@ -71,7 +71,7 @@ pub(crate) use crate::item_tree::{
 };
 
 #[derive(Copy, Clone, Eq, PartialEq)]
-pub(crate) struct RawVisibilityId(u32);
+pub struct RawVisibilityId(u32);
 
 impl RawVisibilityId {
     const PUB: Self = RawVisibilityId(u32::MAX);
@@ -205,7 +205,7 @@ pub(crate) fn block_item_tree_query(
 }
 
 /// The item tree of a source file.
-#[derive(Debug, Default, Eq, PartialEq)]
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
 pub struct ItemTree {
     top_level: Box<[ModItemId]>,
     /// Sorted by the id. The last item, if it has [`ModItemId::TOP_OWNER`], is the top level attrs.
@@ -218,7 +218,7 @@ pub struct ItemTree {
 impl ItemTree {
     /// Returns an iterator over all items located at the top level of the `HirFileId` this
     /// `ItemTree` was created from.
-    pub(crate) fn top_level_items(&self) -> &[ModItemId] {
+    pub fn top_level_items(&self) -> &[ModItemId] {
         &self.top_level
     }
 
@@ -282,7 +282,7 @@ impl ItemTree {
     }
 }
 
-#[derive(Default, Debug, Eq, PartialEq)]
+#[derive(Clone, Default, Debug, Eq, PartialEq)]
 struct ItemVisibilities {
     arena: ThinVec<RawVisibility>,
 }
@@ -313,9 +313,9 @@ enum BigModItem {
 
 // `ModItem` is stored a bunch in `ItemTree`'s so we pay the max for each item. It should stay as
 // small as possible which is why we split them in two, most common ones are 3 usize but some rarer
-// ones are 5.
+// ones are 6.
 #[cfg(target_pointer_width = "64")]
-const _: [(); std::mem::size_of::<BigModItem>()] = [(); std::mem::size_of::<[usize; 5]>()];
+const _: [(); std::mem::size_of::<BigModItem>()] = [(); std::mem::size_of::<[usize; 6]>()];
 #[cfg(target_pointer_width = "64")]
 const _: [(); std::mem::size_of::<SmallModItem>()] = [(); std::mem::size_of::<[usize; 3]>()];
 
@@ -423,7 +423,7 @@ impl ModItemId {
 macro_rules! mod_items {
     ($mod_item:ident -> $( $typ:ident by $either:ident -> $ast:ty ),+ $(,)? ) => {
         #[derive(Debug, Copy, Clone)]
-        pub(crate) enum $mod_item<'a> {
+        pub enum $mod_item<'a> {
             $(
                 $typ(FileAstId<$ast>, &'a $typ),
             )+
@@ -431,7 +431,7 @@ macro_rules! mod_items {
 
         impl ItemTree {
             #[inline]
-            pub(crate) fn index(&self, id: ModItemId) -> $mod_item<'_> {
+            pub fn index(&self, id: ModItemId) -> $mod_item<'_> {
                 use BigModItem::*;
                 use SmallModItem::*;
 
@@ -492,8 +492,8 @@ impl Index<RawVisibilityId> for ItemTree {
 
 #[derive(Debug, Clone, Eq, PartialEq)]
 pub struct Use {
-    pub(crate) visibility: RawVisibilityId,
-    pub(crate) use_tree: UseTree,
+    pub visibility: RawVisibilityId,
+    pub use_tree: UseTree,
 }
 
 #[derive(Debug, Clone, Eq, PartialEq)]
@@ -568,13 +568,13 @@ pub struct ExternBlock {
 #[derive(Debug, Clone, Eq, PartialEq)]
 pub struct Function {
     pub name: Name,
-    pub(crate) visibility: RawVisibilityId,
+    pub visibility: RawVisibilityId,
 }
 
 #[derive(Debug, Clone, Eq, PartialEq)]
 pub struct Struct {
     pub name: Name,
-    pub(crate) visibility: RawVisibilityId,
+    pub visibility: RawVisibilityId,
     pub(crate) value_ns_ctor: StructValueNsCtor,
 }
 
@@ -646,19 +646,19 @@ impl VisibilityExplicitness {
 pub struct Const {
     /// `None` for `const _: () = ();`
     pub name: Option<Name>,
-    pub(crate) visibility: RawVisibilityId,
+    pub visibility: RawVisibilityId,
 }
 
 #[derive(Debug, Clone, Eq, PartialEq)]
 pub struct Static {
     pub name: Name,
-    pub(crate) visibility: RawVisibilityId,
+    pub visibility: RawVisibilityId,
 }
 
 #[derive(Debug, Clone, Eq, PartialEq)]
 pub struct Trait {
     pub name: Name,
-    pub(crate) visibility: RawVisibilityId,
+    pub visibility: RawVisibilityId,
 }
 
 #[derive(Debug, Clone, Eq, PartialEq)]
