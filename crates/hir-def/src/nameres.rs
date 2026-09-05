@@ -152,7 +152,7 @@ impl LocalDefMap {
         extern_prelude.shrink_to_fit();
     }
 
-    pub(crate) fn extern_prelude(
+    pub fn extern_prelude(
         &self,
     ) -> impl DoubleEndedIterator<Item = (&Name, (ModuleId, Option<ExternCrateId>))> + '_ {
         self.extern_prelude.iter().map(|(name, &def)| (name, def))
@@ -672,7 +672,7 @@ impl DefMap {
         self.block.map(|block| block.block)
     }
 
-    pub(crate) fn prelude(&self) -> Option<(ModuleId, Option<UseId>)> {
+    pub fn prelude(&self) -> Option<(ModuleId, Option<UseId>)> {
         self.prelude
     }
 
